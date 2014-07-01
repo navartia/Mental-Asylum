@@ -76,14 +76,14 @@ public class MainGameActivity extends SimpleBaseGameActivity {
 		levelScene = new LevelScene(this);
 		levelScene.loadScene();
 		
-		/* Calculate the coordinates for the face, so its centered on the camera. */
+		/* Calculate the coordinates for the face, so its centered on the camera. 
 		final float centerX = (CAMERA_WIDTH - playerRegion.getWidth()) / 2;
 		final float centerY = (CAMERA_HEIGHT - playerRegion.getHeight()) / 2;
 		
-		/* Setting player sprite and sets the chase entity */
+		/* Setting player sprite and sets the chase entity 
 		player = new Sprite(centerX, centerY, playerRegion, this.getVertexBufferObjectManager());
 		player.setRotation(45.0f);
-		//chaseCamera.setChaseEntity(player);
+		//chaseCamera.setChaseEntity(player); */
 		
 		return levelScene;
 	}
