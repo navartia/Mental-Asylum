@@ -4,10 +4,12 @@ import org.andengine.engine.camera.ZoomCamera;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.input.touch.detector.PinchZoomDetector;
+import org.andengine.input.touch.detector.PinchZoomDetector.IPinchZoomDetectorListener;
 
 import android.view.MotionEvent;
 
-public class LevelSceneListener implements IOnSceneTouchListener {
+public class LevelSceneListener implements IOnSceneTouchListener, IPinchZoomDetectorListener {
 	//Scrolling
 	private float mTouchX = 0, mTouchY = 0, mTouchOffsetX = 0, mTouchOffsetY = 0;
 	private ZoomCamera camera;
@@ -39,5 +41,24 @@ public class LevelSceneListener implements IOnSceneTouchListener {
 		}
 		
 		return true;
+	}
+
+	@Override
+	public void onPinchZoom(PinchZoomDetector arg0, TouchEvent arg1, float arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPinchZoomFinished(PinchZoomDetector arg0, TouchEvent arg1,
+			float arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPinchZoomStarted(PinchZoomDetector arg0, TouchEvent arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 }
