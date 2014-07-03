@@ -13,12 +13,14 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
+import org.andengine.util.adt.color.Color;
 
 import android.util.DisplayMetrics;
 
@@ -31,7 +33,7 @@ public class MainGameActivity extends SimpleBaseGameActivity {
 	
     private BitmapTextureAtlas playerTexture;
     private TiledTextureRegion playerRegion;
-    private Sprite player;
+    private AnimatedSprite player;
     
     /*private Scene introScene, menuScene, optionsScene,*/
     private LevelScene levelScene;
@@ -72,20 +74,30 @@ public class MainGameActivity extends SimpleBaseGameActivity {
 		
 		optionsScene = new OptionsScene();
 		resourceCallback.onCreateSceneFinished(optionsScene);
-		*/
+		
 		levelScene = new LevelScene(this);
 		levelScene.loadScene();
 		
-		/* Calculate the coordinates for the face, so its centered on the camera. 
+		return levelScene;
+		*/
+		Scene scene = new Scene();
+		scene.setBackground(new Background(Color.WHITE));
+		
+		/* Calculate the coordinates for the face, so its centered on the camera. */
 		final float centerX = (CAMERA_WIDTH - playerRegion.getWidth()) / 2;
 		final float centerY = (CAMERA_HEIGHT - playerRegion.getHeight()) / 2;
+		
+		player = new AnimatedSprite(centerX, centerY, playerRegion, this.getVertexBufferObjectManager());
+		scene.attachChild(player);
+		
+		player.animate(500);
+		
+		return scene;
 		
 		/* Setting player sprite and sets the chase entity 
 		player = new Sprite(centerX, centerY, playerRegion, this.getVertexBufferObjectManager());
 		player.setRotation(45.0f);
 		//chaseCamera.setChaseEntity(player); */
-		
-		return levelScene;
 	}
 	
 	//Load the graphic related resources to the Activity
@@ -93,16 +105,16 @@ public class MainGameActivity extends SimpleBaseGameActivity {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("graphics/");
 		
 		// Loading texture for player
-		playerTexture = new BitmapTextureAtlas(getTextureManager(),			//Texture manager
-								64, 64,										//Size of the bitmap
+		playerTexture = new BitmapTextureAtlas(this.getTextureManager(),	//Texture manager
+								495, 520,									//Size of the bitmap
 								TextureOptions.BILINEAR_PREMULTIPLYALPHA);	//Texture options
 		
 		playerRegion = BitmapTextureAtlasTextureRegionFactory.
 						createTiledFromAsset(playerTexture, 				//Texture atlas
 											this.getAssets(),				//Asset manager
-											"player.png",					//File path
+											"character.png",				//File path
 											0, 0, 							//Starting coordinates
-											1, 1);							//Sprite row and column
+											9, 8);							//Sprite column and row
 		
 		playerTexture.load();
 	}
