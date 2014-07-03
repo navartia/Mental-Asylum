@@ -1,17 +1,12 @@
 package navartia.mentalasylum.menu;
 
-import org.andengine.engine.camera.ZoomCamera;
+import navartia.mentalasylum.system.BaseSceneListener;
+
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
-public class MenuSceneListener implements IOnSceneTouchListener {
-	ZoomCamera camera;
-	
-	public MenuSceneListener(ZoomCamera camera) {
-		this.camera = camera;
-	}
-	
+public class MenuSceneListener extends BaseSceneListener implements IOnSceneTouchListener {
 	@Override
 	public boolean onSceneTouchEvent(Scene arg0, TouchEvent arg1) {
 		// TODO Auto-generated method stub

@@ -21,6 +21,6 @@ public class MenuScene extends Scene {
 	}
 	
 	private void initialize() {
-		super.setOnSceneTouchListener(new MenuSceneListener(parent.getCamera()));
+		super.setOnSceneTouchListener(new MenuSceneListener());
 	}
 }

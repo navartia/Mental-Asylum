@@ -1,20 +1,15 @@
 package navartia.mentalasylum.levels;
 
-import org.andengine.engine.camera.ZoomCamera;
-import org.andengine.entity.scene.IOnSceneTouchListener;
+import navartia.mentalasylum.system.BaseSceneListener;
+
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
 import android.view.MotionEvent;
 
-public class LevelSceneListener implements IOnSceneTouchListener {
+public class LevelSceneListener extends BaseSceneListener {
 	//Scrolling
 	private float mTouchX = 0, mTouchY = 0, mTouchOffsetX = 0, mTouchOffsetY = 0;
-	private ZoomCamera camera;
-	
-	public LevelSceneListener(ZoomCamera camera) {
-		this.camera = camera;
-	}
 	
 	@Override
 	public boolean onSceneTouchEvent(Scene pScene, TouchEvent touchEvent) {

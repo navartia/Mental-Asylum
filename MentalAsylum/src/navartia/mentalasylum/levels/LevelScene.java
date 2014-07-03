@@ -1,32 +1,36 @@
 package navartia.mentalasylum.levels;
 
-import navartia.mentalasylum.MainGameActivity;
+import navartia.mentalasylum.system.BaseScene;
+import navartia.mentalasylum.system.MapLoader;
 
-import org.andengine.engine.camera.ZoomCamera;
-import org.andengine.entity.scene.Scene;
 import org.andengine.extension.tmx.TMXTiledMap;
 
-public class LevelScene extends Scene {
-	MainGameActivity parent;
-	LevelLoader loader;
+public class LevelScene extends BaseScene {
+	private MapLoader loader;
 	
-	TMXTiledMap currentLevel;
-	int level = 1;
+	private float minZoom, maxZoom, zoomDepth;
+	private TMXTiledMap currentLevel;
 	
-	public LevelScene(MainGameActivity parent) {
-		this.parent = parent;
+	@Override
+	public void initialize() {
+		loader = new MapLoader();
+		
+		zoomDepth = camera.getZoomFactor();
+		super.setOnSceneTouchListener(new LevelSceneListener());
+	}
+	
+	@Override
+	public void createScene() {
 		initialize();
-	}
-	
-	private void initialize() {
-		loader = new LevelLoader();
-		super.setOnSceneTouchListener(new LevelSceneListener(parent.getCamera()));
-	}
-	
-	public void loadScene() {
-		currentLevel = loader.loadMapIso(parent, "tmx/Hospital.tmx");
+		currentLevel = loader.loadMapIso("tmx/Hospital.tmx");
 		loader.attachMap(this, currentLevel);
 		setupCamera(currentLevel);
+	}
+	
+	@Override
+	public void disposeScene() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	private void setupCamera(TMXTiledMap map) {
@@ -37,13 +41,11 @@ public class LevelScene extends Scene {
 		setupCameraIsometric(height, width);
 	}
 	
-	public void setupCameraIsometric(final float height, final float width) {
-		ZoomCamera camera = parent.getCamera();
-		
+	private void setupCameraIsometric(final float height, final float width) {	
 		if (camera.getWidth() / height >= camera.getHeight() / width) {
-			parent.setMaxZoom(camera.getWidth() / height);
+			maxZoom = camera.getWidth() / height;
 		} else {
-			parent.setMaxZoom(camera.getHeight() / width);
+			maxZoom = camera.getHeight() / width;
 		}
 		/*
 		 * We have to consider the map rows and columns do not match,
@@ -69,15 +71,7 @@ public class LevelScene extends Scene {
 		camera.setBounds(pBoundsXMin, pBoundsYMin, pBoundsXMax, pBoundsYMax);
 		camera.setBoundsEnabled(true);
 		
-		camera.setZoomFactor(parent.getZoomDepth());
+		camera.setZoomFactor(zoomDepth);
 		//camera.setCenter(0, 0);
-	}
-	
-	protected int getLevel() {
-		return level;
-	}
-	
-	protected MainGameActivity getActivity() {
-		return parent;
 	}
 }

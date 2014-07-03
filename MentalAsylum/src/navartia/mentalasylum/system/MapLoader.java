@@ -1,6 +1,7 @@
-package navartia.mentalasylum.levels;
+package navartia.mentalasylum.system;
 
 import java.util.ArrayList;
+
 
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
@@ -15,11 +16,16 @@ import org.andengine.util.debug.Debug;
 
 import android.util.Log;
 
-public class LevelLoader {
+public class MapLoader {
+	BaseGameActivity activity;
 	
-	public TMXTiledMap loadMapIso(BaseGameActivity pActivity, String filepath) {
-		final TMXLoader tmxLoader = new TMXLoader(pActivity.getAssets(), pActivity.getTextureManager(),
-								TextureOptions.DEFAULT, pActivity.getVertexBufferObjectManager());
+	public MapLoader() {
+		this.activity = ResourceManager.getInstance().activity;
+	}
+	
+	public TMXTiledMap loadMapIso(String filepath) {
+		final TMXLoader tmxLoader = new TMXLoader(activity.getAssets(), activity.getTextureManager(),
+								TextureOptions.DEFAULT, activity.getVertexBufferObjectManager());
 		
 		tmxLoader.setAllocateTiles(false);
 		tmxLoader.setUseLowMemoryVBO(true);
@@ -50,8 +56,12 @@ public class LevelLoader {
 		}
 	}
 	
-	public void attachMap(Scene parent, BaseGameActivity pActivity, String filepath) {
-		attachMap(parent, loadMapIso(pActivity, filepath));
+	public void attachMap(Scene parent, String filepath) {
+		attachMap(parent, loadMapIso(filepath));
+	}
+	
+	public void detachMap(Scene parent) {
+		//TODO: Add function here
 	}
 	
 	public void attachLayer(Scene parent, final TMXLayer layer, int index) {
